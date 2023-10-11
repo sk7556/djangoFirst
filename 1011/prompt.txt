@@ -1,0 +1,75 @@
+ORM, Django Shell, QuerySet : https://paullabworkspace.notion.site/ORM-Django-Shell-QuerySet-4c1ad20735ce44c483d6ff9071bd092c?pvs=4
+공식문서 : https://docs.djangoproject.com/en/4.2/ref/models/querysets/#django.db.models.query.QuerySet
+jupyter notebook 사용 : https://youtu.be/Di5CYnoHYRk
+
+python manage.py shell
+>>> from blog.models import Post
+>>> Post.objects.all()
+<QuerySet [<Post: 제목: 1, 시간: 2023-10-11 02:19>, <Post: 제목: 2, 시간: 2023-10-11 02:19>, <Post: 제목: 3, 시간: 2023-10-11 02:19>]>
+>>> a = Post.objects.all()
+>>> type(a)
+<class 'django.db.models.query.QuerySet'>
+>>> dir(a)
+[... 생략 ..., 'aaggregate', 'abulk_create', 'abulk_update', 'acontains', 'acount', 'acreate', 'adelete', 'aearliest', 'aexists', 'aexplain', 'afirst', 'aget', 'aget_or_create', 
+'aggregate', 'ain_bulk', 'aiterator', 'alast', 'alatest', 'alias', 'all', 'annotate', 'as_manager', 'aupdate', 'aupdate_or_create', 'bulk_create', 'bulk_update', 'complex_filter', 'contains', 'count', 'create', 'dates', 'datetimes', 'db', 'defer', 'delete', 'difference', 'distinct', 'earliest', 'exclude', 'exists', 'explain', 'extra', 'filter', 'first', 'get', 'get_or_create', 'in_bulk', 'intersection', 'iterator', 'last', 'latest', 'model', 'none', 'only', 'order_by', 'ordered', 'prefetch_related', 'query', 'raw', 'resolve_expression', 'reverse', 'select_for_update', 'select_related', 'union', 'update', 'update_or_create', 'using', 'values', 'values_list']
+
+>>> Post.objects.all().order_by('-pk')
+<QuerySet [<Post: 제목: 3, 시간: 2023-10-11 02:19>, <Post: 제목: 2, 시간: 2023-10-11 02:19>, <Post: 제목: 1, 시간: 2023-10-11 02:19>]>
+>>> Post.objects.all().count()
+3   
+>>> q = Post.objects.get(id=1)
+>>> q
+<Post: 제목: 1, 시간: 2023-10-11 02:19>
+>>> q = Post.objects.get(pk=1) 
+>>> q
+<Post: 제목: 1, 시간: 2023-10-11 02:19>
+>>> q.title
+'1' 
+>>> q.id
+1   
+>>> q.pk
+1 
+
+>>> Post.objects.filter(title='1')
+>>> Post.objects.filter(id=1)
+>>> Post.objects.filter(title__contains='test')
+>>> Post.objects.filter(contents__contains='2')
+>>> Post.objects.filter(contents__contains='2').filter(title__contains='test')
+>>> Post.objects.filter(contents__contains='2').filter(title__contains='2')
+>>> Post.objects.filter(id__lt=3)
+>>> Post.objects.filter(id__gt=3)
+
+
+eq - equal ( = )
+ne - not equal ( <> )
+lt - little ( < )
+le - little or equal ( <= )
+gt - greater ( > )
+ge - greater or equal ( >= )
+
+# User에게 받아서 이 코드를 실행시키면 게시물을 생성할 수 있습니다!
+>>> q = Post.objects.create(title='test sample', contents='222')   
+>>> q
+<Post: 제목: test sample, 시간: 2023-10-11 04:19>
+>>> q.title
+'test sample'
+>>> q.save()
+
+>>> Post.objects.all().filter(contents__contains='2')
+<QuerySet [<Post: 제목: 2, 시간: 2023-10-11 02:19>, <Post: 제목: test sample, 시간: 2023-10-11 04:19>]>
+>>> Post.objects.all().filter(contents__contains='2').filter(title__contains='sample')
+<QuerySet [<Post: 제목: test sample, 시간: 2023-10-11 04:19>]>
+
+>>> q = Post.objects.get(pk=4)
+>>> q.delete()
+(1, {'blog.Post': 1})
+>>> q
+<Post: 제목: test sample, 시간: 2023-10-11 04:19>
+>>> Post.objects.all()
+<QuerySet [<Post: 제목: 1, 시간: 2023-10-11 02:19>, <Post: 제목: 2, 시간: 2023-10-11 02:19>, <Post: 제목: 3, 시간: 2023-10-11 02:19>]>
+
+
+Create
+Read
+Update
+Delete
