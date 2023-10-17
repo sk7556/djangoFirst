@@ -1,8 +1,8 @@
 <h1>게시판</h1>
 <ul>
-    {% for post in db %}
+    {% for post_detail in db %}
     <li>
-        <a href="{% url 'post' post.id %}">{{ post.title }}</a>
+        <a href="{% url 'post' post_detail.id %}">{{ post_detail.title }}</a>
     </li>
     {% endfor %}
 </ul>

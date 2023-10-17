@@ -23,7 +23,7 @@ def post(request, pk):
 
 def create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+        form = PostForm(request.POST, request.FILES) # 수정
         if form.is_valid():
             post = form.save()
             return redirect('post', pk=post.pk)
@@ -35,10 +35,10 @@ def update(request, pk):
     post = get_object_or_404(Post, pk=pk)
     # print(post) # 없는 페이지와 있는 페이지를 모두 테스트 해보세요.
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES,instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post) # 수정
         if form.is_valid():
             post = form.save()
-            return redirect('post', pk=post.pk)
+            return redirect('blog')
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/create.html', {'form': form})
