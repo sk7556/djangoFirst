@@ -1,0 +1,11 @@
+{% comment %} tube > post_list.html {% endcomment %}
+<ul>
+    {% for post in post_list %}
+    <li>
+        <a href="{% url 'tube:post_detail' post.pk %}">
+            {{ post.title }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'tube:post_new' %}">업로드</a>
