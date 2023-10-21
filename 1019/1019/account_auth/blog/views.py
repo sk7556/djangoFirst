@@ -6,11 +6,12 @@ from rest_framework.permissions import IsAuthenticated
 
 class PostListAPIView(APIView):
     permission_classes = [IsAuthenticated]
-    def get(self, request, format=None):
+    
+    def get(self, request):
         post_list = Post.objects.all()
         serializer = PostSerializer(post_list, many=True)
         return Response(serializer.data)
-    def post(self, request, format=None):
+    def post(self, request):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
