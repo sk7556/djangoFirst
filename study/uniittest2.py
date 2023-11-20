@@ -11,7 +11,7 @@ def mul(x, y):
     return x * y
 
 
-# 테스트 코드
+# 테스트 코드 1 
 class TestAdd(unittest.TestCase):
     def test_add(self):
         print(dir(self)) # 이걸로 어떤 메서드가 있는지 한 번 쭉 눈으로 확인 
